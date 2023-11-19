@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-postgres
+spec:
+  schedule: {{ .Values.global.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: backupserviceacc
+          containers:
+          - name: backup-postgres
+            image: bitnami/kubectl:latest
+            command: [ "/bin/sh", "-c", "kubectl exec -it postgres-postgresql-0 -- /home/customscripts/backup.sh -n default"]
+          restartPolicy: OnFailure

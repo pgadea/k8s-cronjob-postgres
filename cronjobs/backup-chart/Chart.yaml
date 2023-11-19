@@ -1,0 +1,4 @@
+apiVersion: v1
+description: backup-postgres
+name: backup-postgres
+version: 1.0.0
